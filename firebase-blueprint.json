@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Authenticated MUBA AI user profile and app preferences.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name."
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address (private to owner)."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Optional avatar URL."
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "enum": ["en", "es", "fr", "de", "ar", "om", "am"],
+          "description": "Selected app language code."
+        },
+        "darkMode": {
+          "type": "boolean",
+          "description": "Whether dark mode is enabled."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "displayName", "email", "preferredLanguage", "darkMode", "createdAt", "updatedAt"]
+    },
+    "Creation": {
+      "title": "AI Creation",
+      "description": "Metadata and preview for a user-generated AI image or AI video.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["IMAGE", "VIDEO"],
+          "description": "Media type of the creation."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short display title derived from the prompt."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Prompt used to generate the image or video."
+        },
+        "motionStyle": {
+          "type": "string",
+          "description": "Optional AI-directed camera/motion style for videos."
+        },
+        "durationSeconds": {
+          "type": "integer",
+          "description": "Video duration in seconds (0 for images, 5 or 10 for videos)."
+        },
+        "quality": {
+          "type": "string",
+          "enum": ["1K", "HD", "4K"],
+          "description": "Generation quality preset."
+        },
+        "localFileName": {
+          "type": "string",
+          "description": "Local file name inside app storage."
+        },
+        "thumbnailBase64": {
+          "type": "string",
+          "description": "Optional compact Base64 JPEG preview thumbnail."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "type", "title", "prompt", "durationSeconds", "quality", "localFileName", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Per-user profile and settings document isolated to the authenticated owner."
+    },
+    "/users/{userId}/creations/{creationId}": {
+      "schema": { "$ref": "#/entities/Creation" },
+      "description": "Per-user subcollection of generated AI images and videos."
+    }
+  }
+}

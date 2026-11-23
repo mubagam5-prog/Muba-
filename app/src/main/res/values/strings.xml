@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MUBA AI</string>
+    <string name="app_tagline">AI Photo &amp; Video Studio</string>
+    <string name="cd_muba_logo">MUBA AI Logo</string>
+    <string name="cd_hero_banner">MUBA AI Studio Banner</string>
+    <string name="cd_auth_banner">MUBA AI Prism Artwork</string>
+    <string name="cd_selected_photo">Selected source photo</string>
+    <string name="cd_generated_image">Generated AI image</string>
+    <string name="cd_creation_thumbnail">Creation preview thumbnail</string>
+</resources>
